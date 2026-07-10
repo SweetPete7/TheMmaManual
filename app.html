@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#0A0A0A" />
+  <title>The MMA Manual</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body, #root { height: 100%; background: #0A0A0A; }
+    body { overflow: hidden; }
+    #loading {
+      position: fixed; inset: 0; background: #0A0A0A;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      z-index: 9999; color: white; font-family: 'Courier New', monospace;
+      transition: opacity 0.5s;
+    }
+    #loading .logo { font-size: 64px; margin-bottom: 16px; animation: pulse 2s ease-in-out infinite; }
+    #loading .title { font-size: 22px; letter-spacing: 4px; color: #FF1493; margin-bottom: 6px; }
+    #loading .sub { font-size: 11px; letter-spacing: 3px; color: #555; }
+    #loading .bar { width: 140px; height: 3px; background: #222; border-radius: 3px; margin-top: 28px; overflow: hidden; }
+    #loading .fill { height: 100%; background: linear-gradient(90deg, #FF1493, #00CFFF); border-radius: 3px; animation: load 2s ease-in-out forwards; }
+    @keyframes load { 0%{ width:0% } 100%{ width:100% } }
+    @keyframes pulse { 0%,100%{ transform:scale(1) } 50%{ transform:scale(1.1) } }
+  </style>
+</head>
+<body>
+  <div id="loading">
+    <div class="logo">🥋</div>
+    <div class="title">THE MMA MANUAL</div>
+    <div class="sub">YOUR COMPLETE PLATFORM</div>
+    <div class="bar"><div class="fill"></div></div>
+  </div>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel" src="./mma-manual.jsx"></script>
+
+  <script>
+    function tryMount() {
+      if (typeof MMAManualApp !== 'undefined') {
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(React.createElement(MMAManualApp));
+        const loader = document.getElementById('loading');
+        loader.style.opacity = '0';
+        setTimeout(() => loader.style.display = 'none', 500);
+      } else {
+        setTimeout(tryMount, 100);
+      }
+    }
+    window.addEventListener('DOMContentLoaded', () => setTimeout(tryMount, 500));
+  </script>
+</body>
+</html>
