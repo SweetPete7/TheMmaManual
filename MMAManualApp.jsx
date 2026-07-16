@@ -5545,4 +5545,3 @@ export default function MMAManualApp() {
     </div>
   );
 }
-
